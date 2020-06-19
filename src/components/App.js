@@ -1,16 +1,14 @@
 import React from 'react';
-import tvmaze from '../apis/tvmaze';
+import SearchBar from './SearchBar';
+import ShowList  from './ShowList';
 
-class App extends React.Component{
-    constructor(props) {
-        super(props);
-    }
-
-    render(){
-        return(
-            <div>App</div>
-        )
-    }
-}
+const App = () => {
+    return(
+        <div>
+            <SearchBar />
+            <ShowList />
+        </div>
+    )
+};
 
 export default App;
