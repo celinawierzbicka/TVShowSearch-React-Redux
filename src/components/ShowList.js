@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchShows } from '../actions';
+// import { fetchShows } from '../actions';
 
 class ShowList extends React.Component {
-    componentDidMount() {
-        this.props.fetchShows();
-    }
+    // componentDidMount() {
+    //     this.props.fetchShows();
+    // }
 
     renderList() {
         return this.props.shows.map(show => {
@@ -28,7 +28,7 @@ class ShowList extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-    return { shows: state.shows }
+    return { shows: state.shows.shows }
 }
 
-export default connect(mapStateToProps, { fetchShows })(ShowList);
+export default connect(mapStateToProps)(ShowList);

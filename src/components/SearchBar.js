@@ -1,16 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { searchShows, fetchShows } from '../actions';
 
 class SearchBar extends React.Component {
-    state = { term: '' };
-
     onInputChange = event => {
-        this.setState({ term: event.target.value })
+        this.props.searchShows(event.target.value);
+        console.log(this.props.term)
     };
 
     onFormSubmit = event => {
         event.preventDefault();
-
-    this.props.onFormSubmit(this.state.term);
+        this.props.fetchShows(this.props.term);
+        console.log(this.props.shows)
     }
 
     render() {
@@ -19,7 +20,8 @@ class SearchBar extends React.Component {
                 <form onSubmit={this.onFormSubmit}>
                     <div>
                         <label>Shows Search</label>
-                        <input type="text" value={this.state.term} onChange={this.onInputChange} />
+                        <input type="text" onChange={this.onInputChange} />
+                        <button type="submit">Search</button>
                     </div>
                 </form>
             </div>
@@ -27,4 +29,8 @@ class SearchBar extends React.Component {
     }
 };
 
-export default SearchBar;
+const mapStateToProps = (state) => {
+    return { term: state.shows.term, shows: state.shows.shows }
+}
+
+export default connect(mapStateToProps, { searchShows, fetchShows })(SearchBar);

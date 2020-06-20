@@ -1,19 +1,16 @@
 import tvmaze from '../apis/tvmaze';
 
-export const fetchShows = () => {
+export const searchShows = term => dispatch => {
+    dispatch({ type: 'SEARCH_SHOWS', payload: term });
+};
+
+export const fetchShows = term => {
     return async dispatch => {
         const response = await tvmaze.get('/search/shows', {
             params: {
-                q: 'girls'
+                q: term
             }
         });
         dispatch({ type: 'FETCH_SHOWS', payload: response.data });
-    };
-};
-
-export const selectShow = (show) => {
-    return {
-        type: "SHOW_SELECTED",
-        payload: show
     };
 };
