@@ -1,21 +1,32 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { fetchShows } from '../actions';
 
 class ShowList extends React.Component {
-    // componentDidMount() {
-    //     this.props.fetchShows();
-    // }
-
     renderList() {
-        return this.props.shows.map(show => {
-            return (
-                <div key={show.show.id}>
-                    <h2>{show.show.name}</h2>
-                    <p>Rating: {show.score}</p>
-                </div>
-            )
-        })
+        if (this.props.shows){
+            return this.props.shows.sort(function(a, b){return b.show.rating.average - a.show.rating.average}).map(show => {
+                return (
+                    <div key={show.show.id}>
+                        <div>
+                            <img src={show.show.image ? show.show.image.medium : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png"} />
+                        </div>
+                        <div>
+                            <h2>{show.show.name}</h2>
+                        </div>
+                        <p>Rating: {show.show.rating.average ? show.show.rating.average : "Not available" }</p>
+                        <div>
+                            <p>Genre: {show.show.genres.join(", ")}</p>
+                        </div>
+                        <div>
+                            <p>Release date: {show.show.premiered}</p>
+                        </div>
+                    </div>
+                )
+            })
+        } else {
+            return <div>No shows were found.</div>
+        }
+
     }
 
     render() {
@@ -28,7 +39,7 @@ class ShowList extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-    return { shows: state.shows.shows }
+    return { shows: state.shows.filteredShows }
 }
 
 export default connect(mapStateToProps)(ShowList);

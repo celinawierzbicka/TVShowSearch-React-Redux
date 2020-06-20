@@ -5,14 +5,12 @@ import { searchShows, fetchShows } from '../actions';
 class SearchBar extends React.Component {
     onInputChange = event => {
         this.props.searchShows(event.target.value);
-        console.log(this.props.term)
     };
 
     onFormSubmit = event => {
         event.preventDefault();
         this.props.fetchShows(this.props.term);
-        console.log(this.props.shows)
-    }
+    };
 
     render() {
         return (
@@ -30,7 +28,7 @@ class SearchBar extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-    return { term: state.shows.term, shows: state.shows.shows }
+    return { term: state.term.term, shows: state.shows.shows }
 }
 
 export default connect(mapStateToProps, { searchShows, fetchShows })(SearchBar);

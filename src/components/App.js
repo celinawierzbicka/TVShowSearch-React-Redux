@@ -1,12 +1,14 @@
 import React from 'react';
 import SearchBar from './SearchBar';
-// import ShowList  from './ShowList';
+import ShowList  from './ShowList';
+import FilterDay from './FilterDay';
 
 const App = () => {
     return(
         <div>
             <SearchBar />
-            {/* <ShowList /> */}
+            <FilterDay />
+            <ShowList />
         </div>
     )
 };

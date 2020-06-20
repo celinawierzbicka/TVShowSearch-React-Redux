@@ -14,3 +14,11 @@ export const fetchShows = term => {
         dispatch({ type: 'FETCH_SHOWS', payload: response.data });
     };
 };
+
+export const filterShows = (shows, day) => {
+    let filteredShows = shows.filter(show => { return show.show.schedule.days.includes(day) });
+    return { 
+        type: 'FILTER_SHOWS', 
+        payload: filteredShows
+    };
+};
