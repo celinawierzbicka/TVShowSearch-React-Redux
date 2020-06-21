@@ -1,0 +1,24 @@
+.filter-wrapper {
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+button > * {
+    pointer-events: none;
+}
+

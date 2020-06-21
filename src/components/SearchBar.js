@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { searchShows, fetchShows } from '../actions';
+import Button from '@material-ui/core/Button';
 
 class SearchBar extends React.Component {
     onInputChange = event => {
@@ -8,6 +9,8 @@ class SearchBar extends React.Component {
     };
 
     onFormSubmit = event => {
+        let buttons = document.querySelectorAll("#day");
+        buttons.forEach(button => {button.className = "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"});
         event.preventDefault();
         this.props.fetchShows(this.props.term);
     };
@@ -19,7 +22,7 @@ class SearchBar extends React.Component {
                     <div>
                         <label>Shows Search</label>
                         <input type="text" onChange={this.onInputChange} />
-                        <button type="submit">Search</button>
+                        <Button type="submit" variant="contained" color="primary">Search</Button>
                     </div>
                 </form>
             </div>

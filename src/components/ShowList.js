@@ -8,7 +8,7 @@ class ShowList extends React.Component {
                 return (
                     <div key={show.show.id}>
                         <div>
-                            <img src={show.show.image ? show.show.image.medium : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png"} />
+                            <img src={show.show.image ? show.show.image.medium : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png"} alt={show.show.name}/>
                         </div>
                         <div>
                             <h2>{show.show.name}</h2>
@@ -26,7 +26,6 @@ class ShowList extends React.Component {
         } else {
             return <div>No shows were found.</div>
         }
-
     }
 
     render() {
