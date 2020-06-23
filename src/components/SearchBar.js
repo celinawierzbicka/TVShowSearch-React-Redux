@@ -1,37 +1,46 @@
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import { searchShows, fetchShows } from '../actions';
-// import Button from '@material-ui/core/Button';
+import React from 'react';
+import { connect } from 'react-redux';
+import { searchShows, fetchShows } from '../actions';
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
+import { MemoryRouter as Router } from 'react-router';
 
-// class SearchBar extends React.Component {
-//     onInputChange = event => {
-//         this.props.searchShows(event.target.value);
-//     };
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+}));
 
-//     onFormSubmit = event => {
-//         let buttons = document.querySelectorAll("#day");
-//         buttons.forEach(button => {button.className = "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"});
-//         event.preventDefault();
-//         this.props.fetchShows(this.props.term);
-//     };
+const SearchBar = function(props) {
+    const classes = useStyles();
+    const onInputChange = event => {
+        props.searchShows(event.target.value);
+    };
 
-//     render() {
-//         return (
-//             <div>
-//                 <form onSubmit={this.onFormSubmit}>
-//                     <div>
-//                         <label>Shows Search</label>
-//                         <input type="text" onChange={this.onInputChange} />
-//                         <Button type="submit" variant="contained" color="primary">Search</Button>
-//                     </div>
-//                 </form>
-//             </div>
-//         )
-//     }
-// };
+    const onFormSubmit = event => {
+        let buttons = document.querySelectorAll("#day");
+        buttons.forEach(button => {button.className = "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"});
+        event.preventDefault();
+        props.fetchShows(props.term);
+    };
 
-// const mapStateToProps = (state) => {
-//     return { term: state.term.term, shows: state.shows.shows }
-// }
+    return (
+        <div className="search-bar">
+            <Router>
+            <form className={classes.root} noValidate autoComplete="off" onSubmit={onFormSubmit}>
+                <Input placeholder="Enter TV Show title..." onChange={onInputChange} id="standard-basic" autoFocus="true" />
+                <Button type="submit" variant="contained" color="primary" onClick={onFormSubmit}>Search</Button>
+             </form>
+            </Router>
+        </div>
+    );
+};
 
-// export default connect(mapStateToProps, { searchShows, fetchShows })(SearchBar);
+const mapStateToProps = (state) => {
+    return { term: state.term.term, shows: state.shows.shows }
+}
+
+export default connect(mapStateToProps, { searchShows, fetchShows })(SearchBar);
