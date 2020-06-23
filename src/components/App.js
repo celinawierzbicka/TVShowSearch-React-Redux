@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-// import SearchBar from './SearchBar';
-// import ShowList  from './ShowList';
 import FilterDay from './FilterDay';
 import NavBar from './NavBar'
 import ShowCard from './ShowCard';
@@ -13,18 +11,15 @@ import '../styles.css'
 const App = () => {
     return(
         <div>
-            <NavBar />
-            {/* <SearchBar /> */}
-            <SearchBarNew />
-            <FilterDay />
             <BrowserRouter>
                 <div>
+                    <NavBar />
+                    <Route path="/" exact component={SearchBarNew} />
+                    <Route path="/" exact component={FilterDay} />
                     <Route path="/" exact component={ShowCard} />
-                    <Route path="/:id" component={ShowDetails} />
+                    <Route path="/show/:id" component={ShowDetails} />
                 </div>
             </BrowserRouter>
-            <ShowCard />
-            {/* <ShowList /> */}
         </div>
     )
 };

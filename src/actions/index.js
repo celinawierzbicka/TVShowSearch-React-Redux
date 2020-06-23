@@ -22,3 +22,17 @@ export const filterShows = (shows, day) => {
         payload: filteredShows
     };
 };
+
+export const selectShow = (shows, id) => {
+    let selectedShow = shows.filter(show => { return show.show.id === id });
+    return { 
+        type: 'SELECT_SHOW', 
+        payload: selectedShow
+    };
+};
+
+export const noResultsToFilter = () => {
+    return { 
+        type: 'NO_SHOW_FILTER'
+    };
+};

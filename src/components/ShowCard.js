@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { selectShow } from '../actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -41,8 +43,15 @@ const useStyles = makeStyles({
 
 const SimpleCard = function(props) {
     const classes = useStyles();
+
+    const onSelectShow = (showId) => {
+        props.selectShow(props.shows, showId)
+    }
+
     const renderList = () => {
-        if (props.shows){
+        if(!props.isSearched && props.filterWithNoSearchResults) {
+            return <Typography>Please search for TV Shows first.</Typography>
+        } else if (props.shows){
             return props.shows.sort(function(a, b){return b.show.rating.average - a.show.rating.average}).map(show => {
                 return (
                     <Card className={classes.root} key={show.show.id}>
@@ -65,15 +74,14 @@ const SimpleCard = function(props) {
                                     Rating: {show.show.rating.average ? show.show.rating.average : "Not available" }
                                 </Typography>
                                 <CardActions className={classes.action}>
-                                <Button variant="outlined" size="medium">See details</Button>
-                            </CardActions>                            
+                                    <Button variant="outlined" size="medium" component={RouterLink} to={"/show/"+show.show.id} onClick={() => onSelectShow(show.show.id)}>See details</Button>
+                                </CardActions>                            
                         </CardContent>
-
                     </Card>
                 )
             })
         } else {
-            return <div><h2>Sorry, no shows are broadcasted on selected day.</h2></div>
+            return <Typography>Sorry, no shows are broadcasted on selected day.</Typography>
         }
     }
 
@@ -85,7 +93,7 @@ const SimpleCard = function(props) {
 };
 
 const mapStateToProps = (state) => {
-    return { shows: state.shows.filteredShows }
+    return { shows: state.shows.filteredShows, filterWithNoSearchResults: state.shows.filterWithNoSearchResults, isSearched: state.shows.isSearched }
 }
 
-export default connect(mapStateToProps)(SimpleCard);
+export default connect(mapStateToProps, { selectShow })(SimpleCard);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { filterShows } from '../actions';
+import { filterShows, noResultsToFilter } from '../actions';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
@@ -11,7 +11,11 @@ class FilterDay extends React.Component {
         let button = event.target
         button.className = "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
         let day = event.target.textContent;
-        this.props.filterShows(this.props.shows, day);
+        if(this.props.isSearched) {
+            this.props.filterShows(this.props.shows, day);
+        } else {
+            this.props.noResultsToFilter()
+        }
     }
 
     renderDays() {
@@ -38,7 +42,7 @@ class FilterDay extends React.Component {
 };
 
 const mapStateToProps = (state) => {
-    return { shows: state.shows.shows }
+    return { shows: state.shows.shows, isSearched: state.shows.isSearched }
 }
 
-export default connect(mapStateToProps, { filterShows })(FilterDay);
+export default connect(mapStateToProps, { filterShows, noResultsToFilter })(FilterDay);
