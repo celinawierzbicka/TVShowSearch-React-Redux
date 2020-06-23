@@ -11,7 +11,7 @@ class FilterDay extends React.Component {
         let button = event.target
         button.className = "MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-containedSizeSmall MuiButton-sizeSmall"
         let day = event.target.textContent;
-        if(this.props.isSearched) {
+        if(this.props.isSearched && this.props.shows.length > 0) {
             this.props.filterShows(this.props.shows, day);
         } else {
             this.props.noResultsToFilter()

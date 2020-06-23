@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { allSearchResults } from '../actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -48,12 +49,18 @@ const useStyles = makeStyles({
 
 const ShowDetails = function(props) {
     const classes = useStyles();
-    const description = parse(props.selectedShow.show.summary ? props.selectedShow.show.summary : "Not available" )
-        return (
+
+    const onBackToSearchResults = () => {
+        props.allSearchResults();
+    }
+
+    const description = parse(props.selectedShow.show.summary ? props.selectedShow.show.summary : "Not available" );
+
+    return (
         <div className="details">
             <Typography className={classes.back}>
                 <ArrowBackIcon color="primary"/>
-                <Link variant="outlined" size="large" component={RouterLink} to="/">Back to Search Results</Link>
+                <Link variant="outlined" size="large" component={RouterLink} to="/" onClick={onBackToSearchResults}>Back to Search Results</Link>
             </Typography>
             <Card className={classes.root}>
                 <CardMedia
@@ -87,4 +94,4 @@ const mapStateToProps = (state) => {
     return { selectedShow: state.selectedShow.selectedShow[0] }
 }
 
-export default connect(mapStateToProps)(ShowDetails);
+export default connect(mapStateToProps, {allSearchResults})(ShowDetails);

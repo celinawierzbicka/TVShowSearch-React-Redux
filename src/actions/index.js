@@ -36,3 +36,21 @@ export const noResultsToFilter = () => {
         type: 'NO_SHOW_FILTER'
     };
 };
+
+export const allSearchResults = () => {
+    return { 
+        type: 'BACK_TO_SEARCH_RESULTS'
+    };
+};
+
+export const clearSearchResults = () => {
+    return { 
+        type: 'CLEAR_SEARCH_RESULTS'
+    };
+};
+
+export const emptyStringSearch = () => {
+    return { 
+        type: 'EMPTY_STRING_SEARCH'
+    };
+};

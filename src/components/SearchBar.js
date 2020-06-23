@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { searchShows, fetchShows } from '../actions';
+import { searchShows, fetchShows, emptyStringSearch } from '../actions';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
+import { Typography } from '@material-ui/core';
 import { MemoryRouter as Router } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,28 +20,35 @@ const SearchBar = function(props) {
     const onInputChange = event => {
         props.searchShows(event.target.value);
     };
-
+  
     const onFormSubmit = event => {
         let buttons = document.querySelectorAll("#day");
         buttons.forEach(button => {button.className = "MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-outlinedSizeSmall MuiButton-sizeSmall"});
         event.preventDefault();
-        props.fetchShows(props.term);
+        if (props.term) {
+            props.fetchShows(props.term);
+        } else {
+            props.emptyStringSearch();
+        }
     };
+    let emptyStringNotification = "";
+    if(props.emptyStringSearched) {
+        emptyStringNotification = <Typography variant="caption" color="secondary">The search query can't be empty. Please enter TV Show title to search shows.</Typography>
+    }
 
     return (
         <div className="search-bar">
-            <Router>
             <form className={classes.root} noValidate autoComplete="off" onSubmit={onFormSubmit}>
-                <Input placeholder="Enter TV Show title..." onChange={onInputChange} id="standard-basic" autoFocus="true" />
+                <Input placeholder="Enter TV Show title..." onChange={onInputChange} id="standard-basic" autoFocus={true} required={true} value={props.term}/>
                 <Button type="submit" variant="contained" color="primary" onClick={onFormSubmit}>Search</Button>
              </form>
-            </Router>
+             {emptyStringNotification}
         </div>
     );
 };
 
 const mapStateToProps = (state) => {
-    return { term: state.term.term, shows: state.shows.shows }
+    return { term: state.term.term, shows: state.shows.shows, emptyStringSearched: state.term.emptyStringSearch }
 }
 
-export default connect(mapStateToProps, { searchShows, fetchShows })(SearchBar);
+export default connect(mapStateToProps, { searchShows, fetchShows, emptyStringSearch })(SearchBar);

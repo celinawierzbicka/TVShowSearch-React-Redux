@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import Container from '@material-ui/core/Container';
 import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -45,14 +46,14 @@ const ShowList = function(props) {
     const classes = useStyles();
 
     const onSelectShow = (showId) => {
-        props.selectShow(props.shows, showId)
+        props.selectShow(props.filteredShows, showId)
     }
 
     const renderList = () => {
         if(!props.isSearched && props.filterWithNoSearchResults) {
             return <Typography>Please search for TV Shows first.</Typography>
-        } else if (props.shows){
-            return props.shows.sort(function(a, b){return b.show.rating.average - a.show.rating.average}).map(show => {
+        } else if (props.filteredShows.length > 0){
+            let showList = props.filteredShows.sort(function(a, b){return b.show.rating.average - a.show.rating.average}).map(show => {
                 return (
                     <Card className={classes.root} key={show.show.id}>
                         <CardMedia
@@ -79,9 +80,21 @@ const ShowList = function(props) {
                         </CardContent>
                     </Card>
                 )
-            })
-        } else {
+            });
+            return (
+                <Container>
+                    <Typography>
+                        Search results for "{props.term}":
+                    </Typography>
+                    {showList}
+                </Container>
+            )            
+        } else if (props.isSearched && props.shows.length === 0) {
+            return <Typography>No shows were found. Please try another query.</Typography>
+        }  else if (props.filteredShows.length === 0 && props.shows.length > 0) {
             return <Typography>Sorry, no shows are broadcasted on selected day.</Typography>
+        } else if (props.term === "") {
+            return
         }
     }
 
@@ -93,7 +106,12 @@ const ShowList = function(props) {
 };
 
 const mapStateToProps = (state) => {
-    return { shows: state.shows.filteredShows, filterWithNoSearchResults: state.shows.filterWithNoSearchResults, isSearched: state.shows.isSearched }
+    return {
+        term: state.term.term,
+        shows: state.shows.shows,
+        filteredShows: state.shows.filteredShows, 
+        filterWithNoSearchResults: state.shows.filterWithNoSearchResults, 
+        isSearched: state.shows.isSearched }
 }
 
 export default connect(mapStateToProps, { selectShow })(ShowList);
