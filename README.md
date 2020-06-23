@@ -1,6 +1,6 @@
 # Project Title
 
-The TV Show Search app wired uo to tvmaze API (https://www.tvmaze.com/api)
+The TV Show Search app wired up to tvmaze API (https://www.tvmaze.com/api)
 
 ## Demo
 
