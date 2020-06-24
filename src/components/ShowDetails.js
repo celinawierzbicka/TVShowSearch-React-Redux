@@ -76,7 +76,7 @@ const ShowDetails = function(props) {
                             {props.selectedShow.show.name}
                         </Typography>
                         <Typography className={classes.pos} color="textSecondary">
-                            Genre: {props.selectedShow.show.genres.join(", ")}
+                            Genre: {props.selectedShow.show.genres.length > 0 ? props.selectedShow.show.genres.join(", ") : "Not available"}
                         </Typography>
                         <Typography variant="body2" component="p">
                             Rating: {props.selectedShow.show.rating.average ? props.selectedShow.show.rating.average : "Not available" }

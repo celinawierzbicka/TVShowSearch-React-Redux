@@ -1,3 +1,7 @@
+:root {
+    background: #fafafa;
+}
+
 .filter-wrapper {
     margin: 20px 0px;
     display: flex;

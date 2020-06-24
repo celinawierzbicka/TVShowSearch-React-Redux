@@ -5,12 +5,20 @@ import NavBar from './NavBar'
 import ShowList from './ShowList';
 import SearchBar from './SearchBar';
 import ShowDetails from './ShowDetails';
-
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
 import '../styles.css'
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+  },
+});
 
 const App = () => {
     return(
         <div>
+            <MuiThemeProvider theme={theme}>
             <BrowserRouter>
                 <div>
                     <NavBar />
@@ -20,6 +28,7 @@ const App = () => {
                     <Route path="/show/:id" component={ShowDetails} />
                 </div>
             </BrowserRouter>
+            </MuiThemeProvider>
         </div>
     )
 };

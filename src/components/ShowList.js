@@ -17,8 +17,9 @@ const useStyles = makeStyles({
     minWidth: 275,
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "center",
     margin: 10,
+    backgroundColor: "white"
   },
   title: {
     fontSize: 14,
@@ -35,10 +36,11 @@ const useStyles = makeStyles({
     flexGrow: 2,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
   },
   action: {
       alignSelf: "flex-end",
+      marginTop: "auto",
   }
 });
 
@@ -54,7 +56,7 @@ const ShowList = function(props) {
             return <Typography>Please search for TV Shows first.</Typography>
         } else if (props.filteredShows.length > 0){
             let showList = props.filteredShows.sort(function(a, b){return b.show.rating.average - a.show.rating.average}).map(show => {
-                return (
+                 return (
                     <Card className={classes.root} key={show.show.id}>
                         <CardMedia
                             className={classes.media}
@@ -69,13 +71,13 @@ const ShowList = function(props) {
                                     {show.show.name}
                                 </Typography>
                                 <Typography className={classes.pos} color="textSecondary">
-                                    Genre: {show.show.genres.join(", ")}
+                                    Genre: {show.show.genres.length > 0 ? show.show.genres.join(", ") : "Not available"}
                                 </Typography>
                                 <Typography variant="body2" component="p">
                                     Rating: {show.show.rating.average ? show.show.rating.average : "Not available" }
                                 </Typography>
                                 <CardActions className={classes.action}>
-                                    <Button variant="outlined" size="medium" component={RouterLink} to={"/show/"+show.show.id} onClick={() => onSelectShow(show.show.id)}>See details</Button>
+                                    <Button variant="outlined" color="primary" size="medium" component={RouterLink} to={"/show/"+show.show.id} onClick={() => onSelectShow(show.show.id)}>See details</Button>
                                 </CardActions>                            
                         </CardContent>
                     </Card>
